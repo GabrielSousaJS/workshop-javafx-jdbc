@@ -1,4 +1,4 @@
-package com.example.workshopjavafxjdbc.application;
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

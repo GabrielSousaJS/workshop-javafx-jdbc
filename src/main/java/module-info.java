@@ -7,4 +7,6 @@ module com.example.workshopjavafxjdbc {
     exports com.example.workshopjavafxjdbc;
     exports application;
     opens application to javafx.fxml;
+    exports gui.controller;
+    opens gui.controller to javafx.fxml;
 }

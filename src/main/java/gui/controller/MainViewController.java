@@ -17,6 +17,7 @@ import model.services.DepartmentService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 public class MainViewController implements Initializable {
 
@@ -34,12 +35,15 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemDepartmentAction() {
-        loadView2("/gui/DepartmentList.fxml");
+        loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
+            controller.setDepartmentService(new DepartmentService());
+            //controller.updateTableView();
+        });
     }
 
     @FXML
     public void onMenuItemAboutAction() {
-        loadView("/gui/About.fxml");
+        loadView("/gui/About.fxml", x -> {});
     }
 
     @Override
@@ -49,7 +53,7 @@ public class MainViewController implements Initializable {
 
     // Método utilizado para abrir uma tela em cima da outra.
     // synchronized é utilizado para que o processamento não seja interrompido durante a multi-thread.
-    private synchronized void loadView(String absoluteName) {
+    private synchronized <T> void loadView(String absoluteName, Consumer<T> initializinAction) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
             VBox newVBox = loader.load();
@@ -68,34 +72,10 @@ public class MainViewController implements Initializable {
             // Irá adicionar os filhos de newVbox
             mainVBox.getChildren().addAll(newVBox.getChildren());
 
-        } catch (IOException e) {
-            Alerts.showAlert("IO Excepiton", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
-
-    private synchronized void loadView2(String absoluteName) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-            VBox newVBox = loader.load();
-
-            Scene mainScene = Main.getMainScene();
-            // Irá pegar o primeiro elemento da View, no caso o ScrollPane.
-            // Assim a referência será pega da tela principal.
-            VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-
-            // Irá atribuir ao Node, o mainMenu da tela principal.
-            Node mainMenu = mainVBox.getChildren().get(0);
-            // Irá limpar todos os filhos do mainVBox
-            mainVBox.getChildren().clear();
-            // Irá adicionar os filhos de mainMenu
-            mainVBox.getChildren().add(mainMenu);
-            // Irá adicionar os filhos de newVbox
-            mainVBox.getChildren().addAll(newVBox.getChildren());
-
-            // A partir do objeto do tipo loader, pode tanto carregar a view, como acessar o controller.
-            DepartmentListController controller = loader.getController();
-            controller.setDepartmentService(new DepartmentService());
-            // controller.updateTableView();
+            // O controller será baseado na função lambda definida em cada função de cada botão.
+            // Caso não queira que faça nada, basta colocar que resulta em nada e assim segue.
+            T controller = loader.getController();
+            initializinAction.accept(controller);
         } catch (IOException e) {
             Alerts.showAlert("IO Excepiton", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }

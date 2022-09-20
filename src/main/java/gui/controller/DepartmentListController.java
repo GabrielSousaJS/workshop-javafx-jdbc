@@ -87,6 +87,7 @@ public class DepartmentListController implements Initializable {
             // Pegar a referência para o controlador.
             DepartmentFormController controller = loader.getController();
             controller.setDepartment(obj);
+            controller.setDepartmentService(new DepartmentService());
             controller.updateFormData();
 
             // Quando cria uma janela para dialogo é preciso criar um novo palco e cena.

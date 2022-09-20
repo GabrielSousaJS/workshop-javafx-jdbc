@@ -15,4 +15,12 @@ public class DepartmentService {
         return dao.findAll();
     }
 
+    public void saveOrUpdate(Department obj) {
+        // Ou o departamento será inserido ou atualizado.
+        if (obj.getId() == null) {
+            dao.insert(obj);
+        } else {
+            dao.update(obj);
+        }
+    }
 }

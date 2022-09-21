@@ -2,6 +2,7 @@ package gui.controller;
 
 import application.Main;
 import gui.util.Alerts;
+import gui.util.DataChangeListener;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +27,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DepartmentListController implements Initializable {
+public class DepartmentListController implements Initializable, DataChangeListener {
 
     private DepartmentService service;
 
@@ -88,6 +89,8 @@ public class DepartmentListController implements Initializable {
             DepartmentFormController controller = loader.getController();
             controller.setDepartment(obj);
             controller.setDepartmentService(new DepartmentService());
+            // O próprio objeto do DepartmentListController
+            controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
             // Quando cria uma janela para dialogo é preciso criar um novo palco e cena.
@@ -104,5 +107,10 @@ public class DepartmentListController implements Initializable {
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        updateTableView();
     }
 }

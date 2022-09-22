@@ -31,6 +31,16 @@ public class Utils {
 
     }
 
+    public static Double tryParseToDouble(String str) {
+        // Não haverá risco de acontecer exceção, pois assim, irá capturar e retornar o valor nulo.
+        try {
+            return Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+    }
+
     public static <T> void formatTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
         tableColumn.setCellFactory(column -> {
             TableCell<T, Date> cell = new TableCell<T, Date>() {

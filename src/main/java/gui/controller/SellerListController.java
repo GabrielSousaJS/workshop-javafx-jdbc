@@ -64,7 +64,7 @@ public class SellerListController implements Initializable, DataChangeListener {
     public void onBtNewAction(ActionEvent event) {
         Stage parentStage = Utils.currentStage(event);
         Seller obj = new Seller();
-        // createdDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
+        createdDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
     }
 
     public void setSellerService(SellerService service) {
@@ -105,32 +105,32 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 
     private void createdDialogForm(Seller obj, String absoluteName, Stage parentStage) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//            Pane pane = loader.load();
-//
-//            // Pegar a referência para o controlador.
-//            SellerFormController controller = loader.getController();
-//            controller.setSeller(obj);
-//            controller.setSellerService(new SellerService());
-//            // O próprio objeto do SellerListController
-//            controller.subscribeDataChangeListener(this);
-//            controller.updateFormData();
-//
-//            // Quando cria uma janela para dialogo é preciso criar um novo palco e cena.
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("Enter Seller data");
-//            dialogStage.setScene(new Scene(pane));
-//            dialogStage.setResizable(false);
-//            // O pai dessa janela.
-//            dialogStage.initOwner(parentStage);
-//            // Enquanto a janela não for fechada, não é permitido acessar outra janela.
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            // Para que a janela seja aberta.
-//            dialogStage.showAndWait();
-//        } catch (IOException e) {
-//            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            Pane pane = loader.load();
+
+            // Pegar a referência para o controlador.
+            SellerFormController controller = loader.getController();
+            controller.setSeller(obj);
+            controller.setSellerService(new SellerService());
+            // O próprio objeto do SellerListController
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
+
+            // Quando cria uma janela para dialogo é preciso criar um novo palco e cena.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Enter Seller data");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            // O pai dessa janela.
+            dialogStage.initOwner(parentStage);
+            // Enquanto a janela não for fechada, não é permitido acessar outra janela.
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            // Para que a janela seja aberta.
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @Override

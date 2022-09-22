@@ -37,7 +37,7 @@ public class SellerDaoJDBC implements SellerDao {
             // Como o padrão de data é SQL, é preciso utilizar o pacote Date do sql, posteriormente utilizar o getTime
             // para que não haja erros de tipo
             st.setDate(3, new Date(obj.getBirthDate().getTime()));
-            st.setDouble(4, obj.getBaseSalaray());
+            st.setDouble(4, obj.getBaseSalary());
             st.setInt(5, obj.getDepartment().getId());
 
             // Posteriormente irá verificar quantas linhas foram afetadas.
@@ -77,7 +77,7 @@ public class SellerDaoJDBC implements SellerDao {
             st.setString(1, obj.getName());
             st.setString(2, obj.getEmail());
             st.setDate(3, new Date(obj.getBirthDate().getTime()));
-            st.setDouble(4, obj.getBaseSalaray());
+            st.setDouble(4, obj.getBaseSalary());
             st.setInt(5, obj.getDepartment().getId());
             st.setInt(6, obj.getId());
 
@@ -146,7 +146,7 @@ public class SellerDaoJDBC implements SellerDao {
         obj.setId(rs.getInt("Id"));
         obj.setName(rs.getString("Name"));
         obj.setEmail(rs.getString("Email"));
-        obj.setBaseSalaray(rs.getDouble("BaseSalary"));
+        obj.setBaseSalary(rs.getDouble("BaseSalary"));
         obj.setBirthDate(rs.getDate("BirthDate"));
         obj.setDepartment(dep);
 
